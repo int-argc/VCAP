@@ -56,6 +56,7 @@ public class UploadServlet extends HttpServlet {
 
                     ArrayList<String> positions = new ArrayList<String>();
                     SetOperations positionSet = new SetOperations("position");
+                    positionSet.deleteSet();
 
                     // parse jsonstring
                     JSONObject obj = new JSONObject(jsonStr);
@@ -67,6 +68,7 @@ public class UploadServlet extends HttpServlet {
                         int cand_cnt = pos.getInt("num_candidates");
                         positionSet.add(POS_SCORE - i, posname);
                         SetOperations so = new SetOperations(posname);
+                        so.deleteSet();
                         JSONArray candidates = pos.getJSONArray("candidates");
                         for (int j = 0; j < cand_cnt; j++) {
                             String name = candidates.getString(j);

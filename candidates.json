@@ -7,7 +7,8 @@
     			"Foobar",
     			"Jordan",
     			"Alexis"
-    		]
+    		],
+            "num_candidates" : 4
 	    },
         {
     		"name" : "vice_president",
@@ -15,7 +16,8 @@
     			"Lance",
     			"Renzo",
     			"Mac"
-    		]
+    		],
+            "num_candidates" : 3
 	    }
     ],
     "pos_count" : 2

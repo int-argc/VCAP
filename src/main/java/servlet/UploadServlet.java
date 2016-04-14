@@ -49,8 +49,13 @@ public class UploadServlet extends HttpServlet {
                     for (int i = 0; i < count; i++) {
                         JSONObject pos = arr.getJSONObject(0);
                         String posname = pos.getString("name");
+                        int cand_cnt = pos.getString("num_candidates");
+                        System.out.println("posname = " + posname)
                         JSONArray candidates = pos.getJsonArray("candidates");
-                        // parse here
+                        for (int i; i < cand_cnt; i++) {
+                            String name = candidates.getString(i);
+                            System.out.println("naem = " + name);
+                        }
                     }
 
 

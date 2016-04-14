@@ -73,9 +73,6 @@ public class TexttoSpeechServlet extends HttpServlet {
 				return;
 			}
 
-			Random rand = new Random();
-			int random = rand.nextInt(500000);
-			Integer objInt = random;
 			//String fileName = objInt.hashCode()+"";
 			String fileName = request.getParameter("filename").toString();
 
@@ -85,7 +82,7 @@ public class TexttoSpeechServlet extends HttpServlet {
 			objStorConnect.uploadFile("candidates", fileName+".wav", audioData);
 
 			//response.sendRedirect("convert.jsp?file="+fileName);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("adminpanel.jsp");
 
 			/* byte[] buf = new byte[2046];
 			int len;

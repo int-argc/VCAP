@@ -14,6 +14,7 @@
                 <input type="file" name="file"/> <br />
                 <input type="submit" class="btn" value="Upload"/>
             </form>
+			<a href="results.jsp"> See Current Vote Standings </a>
         </div>
     </body>
 </html>

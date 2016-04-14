@@ -14,24 +14,20 @@
 
 		<h1>Voter's Page</h1>
 
-		<h2>test:</h2>
 		<%
 			SetOperations posSet = new SetOperations("position");
 			Set<String> entries = posSet.sortDesc();
 		    for(String entry : entries) {
-		        int score = posSet.getScore(entry);
-				out.println("entry = " + entry);
-				out.println("score = " + score);
+				out.println("<h3> " + entry + "</h3>");
+				SetOperations memset = new SetOperations(entry);
+				Set<String> entries2 = memset.sortDesc();
+				for (String entry2: entries2){
+					out.println("<p>"+entry2+"</p>");
+				}
 			}
 
-			SetOperations presSet = new SetOperations("president");
-			Set<String> entries2 = presSet.sortDesc();
-		    for(String entry : entries2) {
-		        int score = presSet.getScore(entry);
-				out.println("entry = " + entry);
-				out.println("score = " + score);
-			}
 		%>
+		<a href="index.jsp"> Go Back </a>
 
 	</div>
 

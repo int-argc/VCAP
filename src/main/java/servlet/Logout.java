@@ -1,3 +1,6 @@
+
+package servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -26,11 +29,11 @@ public class Logout extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
     }
-	
-		
+
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-	
+
 }

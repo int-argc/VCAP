@@ -1,7 +1,7 @@
 {
 	"position": [
         {
-    		"name" : "President",
+    		"name" : "president",
             "candidates" : [
     			"Jejomar Binay",
     			"Miriam Defensor Santiago",
@@ -12,7 +12,7 @@
             "num_candidates" : 5
 	    },
         {
-    		"name" : "Vice President",
+    		"name" : "vice_president",
             "candidates" : [
     			"Alan Peter Cayetano",
     			"Francis Escudero",

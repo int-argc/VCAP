@@ -1,4 +1,4 @@
-package redistools;
+package util;
 
 import java.util.Set;
 

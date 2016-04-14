@@ -9,11 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.*;
+import java.util.*;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.json.*;
+
+import util.SetOperations;
 
 @WebServlet(urlPatterns = {"/UploadFile"})
 
 public class UploadServlet extends HttpServlet {
+
+    private static final int POS_SCORE = 10;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,23 +54,25 @@ public class UploadServlet extends HttpServlet {
                     }
                     scanner.close();
 
+                    ArrayList<String> positions = new ArrayList<String>();
+                    SetOperations positionSet = new SetOperations("position");
+
                     // parse jsonstring
                     JSONObject obj = new JSONObject(jsonStr);
                     int count = obj.getInt("pos_count");
                     JSONArray arr = obj.getJSONArray("position");
                     for (int i = 0; i < count; i++) {
-                        JSONObject pos = arr.getJSONObject(0);
+                        JSONObject pos = arr.getJSONObject(i);
                         String posname = pos.getString("name");
-                        int cand_cnt = pos.getString("num_candidates");
-                        System.out.println("posname = " + posname)
-                        JSONArray candidates = pos.getJsonArray("candidates");
-                        for (int i; i < cand_cnt; i++) {
-                            String name = candidates.getString(i);
-                            System.out.println("naem = " + name);
+                        int cand_cnt = pos.getInt("num_candidates");
+                        positionSet.add(POS_SCORE - i, posname);
+                        SetOperations so = new SetOperations(posname);
+                        JSONArray candidates = pos.getJSONArray("candidates");
+                        for (int j = 0; j < cand_cnt; j++) {
+                            String name = candidates.getString(j);
+                            so.add(0, name);
                         }
                     }
-
-
                 }
             }
         }
@@ -66,5 +80,9 @@ public class UploadServlet extends HttpServlet {
 			request.setAttribute("msg", e.getMessage());
 			e.printStackTrace(System.err);
 		}
+
+        // candidates are added to db, redirect to index
+        response.sendRedirect("success.jsp");
+
     }
 }

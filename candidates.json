@@ -1,0 +1,22 @@
+{
+	"position": [
+        {
+    		"name" : "president",
+            "candidates" : [
+    			"Adrian",
+    			"Foobar",
+    			"Jordan",
+    			"Alexis"
+    		]
+	    },
+        {
+    		"name" : "vice_president",
+            "candidates" : [
+    			"Lance",
+    			"Renzo",
+    			"Mac"
+    		]
+	    }
+    ],
+    "pos_count" : 2
+}

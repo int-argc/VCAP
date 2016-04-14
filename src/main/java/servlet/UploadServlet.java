@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.*;
 
 import util.SetOperations;
+import util.TextToStorage;
 
 @WebServlet(urlPatterns = {"/UploadFile"})
 
@@ -54,6 +55,8 @@ public class UploadServlet extends HttpServlet {
                     }
                     scanner.close();
 
+                    // convert candidate names to audio files
+                    TextToStorage textStore = new TextToStorage();
                     ArrayList<String> positions = new ArrayList<String>();
                     SetOperations positionSet = new SetOperations("position");
                     positionSet.deleteSet();
@@ -67,11 +70,16 @@ public class UploadServlet extends HttpServlet {
                         String posname = pos.getString("name");
                         int cand_cnt = pos.getInt("num_candidates");
                         positionSet.add(POS_SCORE - i, posname);
+                        // store an audio clip for this position
+                        textStore.putTextToStorage(TextToStorage.beginStr + posname, posname);
+
                         SetOperations so = new SetOperations(posname);
                         so.deleteSet();
                         JSONArray candidates = pos.getJSONArray("candidates");
                         for (int j = 0; j < cand_cnt; j++) {
                             String name = candidates.getString(j);
+                            // store audio clip of candidate name and store to db
+                            textStore.putTextToStorage(name, name);
                             so.add(0, name);
                         }
                     }

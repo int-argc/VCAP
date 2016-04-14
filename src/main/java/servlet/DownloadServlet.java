@@ -1,3 +1,6 @@
+
+package servlet;
+
 import connectors.ObjectStorageConnector;
 
 import java.io.IOException;
@@ -18,12 +21,12 @@ import org.openstack4j.model.storage.object.SwiftObject;
 public class DownloadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-				
+
 		//response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter()
         try {
 			ObjectStorageConnector connect = new ObjectStorageConnector();
-			
+
             SwiftObject swiftObj;
             InputStream inStr = null;
             OutputStream output = null;
@@ -38,24 +41,24 @@ public class DownloadServlet extends HttpServlet {
                     response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
                     inStr = swiftObj.download().getInputStream();
                     output = response.getOutputStream();
-					
+
 					byte[] buf = new byte[2046];
 					int len;
 					while ((len = inStr.read(buf)) > 0) {
 						output.write(buf, 0, len);
 					}
-							
-					response.setContentType("audio/wav"); 
-					response.setHeader("Content-disposition","attachment;filename=\""+fileName+"\"");  
 
-					OutputStream os =output;   
-									
-					os.flush();  
+					response.setContentType("audio/wav");
+					response.setHeader("Content-disposition","attachment;filename=\""+fileName+"\"");
+
+					OutputStream os =output;
+
+					os.flush();
 					os.close();
                     /*
                     byte[] buffer = new byte[4096];
                     int bytesRead = -1;
-                    
+
                     while((bytesRead = inStr.read(buffer)) != -1) {
                         outStr.write(buffer, 0, bytesRead);
                     }
@@ -63,7 +66,7 @@ public class DownloadServlet extends HttpServlet {
                     outStr.flush();
                     outStr.close();
                     */
-					
+
                     /*IOUtils.copy(inStr, outStr);
                     inStr.close();
                     outStr.flush();

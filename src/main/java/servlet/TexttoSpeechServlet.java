@@ -1,5 +1,9 @@
+
+package servlet;
+
 import connectors.TexttoSpeechConnector;
 import connectors.ObjectStorageConnector;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -51,16 +55,16 @@ public class TexttoSpeechServlet extends HttpServlet {
             throws ServletException, IOException {
 			PrintWriter out = response.getWriter();
 		try{
-			
+
 
 			TexttoSpeechConnector textConnector = new TexttoSpeechConnector();
-			
-			ObjectStorageConnector objStorConnect = new ObjectStorageConnector();	
+
+			ObjectStorageConnector objStorConnect = new ObjectStorageConnector();
 			objStorConnect.createContainer("candidates");
-				
+
 			TextToSpeech service = new TextToSpeech();
 			service.setUsernameAndPassword(textConnector.getUsername(),textConnector.getPassword());
-			
+
 			Payload audioData = null;
 
 			String text = request.getParameter("candidate").toString();
@@ -69,33 +73,33 @@ public class TexttoSpeechServlet extends HttpServlet {
 				out.println("Error occurred.");
 				return;
 			}
-			
-			Random rand = new Random(); 
+
+			Random rand = new Random();
 			int random = rand.nextInt(500000);
 			Integer objInt = random;
 			//String fileName = objInt.hashCode()+"";
 			String fileName = request.getParameter("filename").toString();
-			
+
 			InputStream speech = service.synthesize(text, "audio/wav");
 			audioData = Payloads.create(speech);
 
 			objStorConnect.uploadFile("candidates", fileName+".wav", audioData);
-			
-			//response.sendRedirect("convert.jsp?file="+fileName); 
+
+			//response.sendRedirect("convert.jsp?file="+fileName);
 			response.sendRedirect("index.jsp");
-			
+
 			/* byte[] buf = new byte[2046];
 			int len;
 			while ((len = speech.read(buf)) > 0) {
 				output.write(buf, 0, len);
 			}
-					
-			response.setContentType("audio/wav"); 
-			response.setHeader("Content-disposition","attachment;filename=output.wav");  
 
-			OutputStream os =output;   
-							
-			os.flush();  
+			response.setContentType("audio/wav");
+			response.setHeader("Content-disposition","attachment;filename=output.wav");
+
+			OutputStream os =output;
+
+			os.flush();
 			os.close();
 			*/
 		}

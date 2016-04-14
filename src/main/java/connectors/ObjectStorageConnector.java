@@ -1,5 +1,5 @@
 package connectors;
- 
+
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -13,9 +13,9 @@ import org.openstack4j.model.storage.object.SwiftObject;
 import org.openstack4j.model.common.Identifier;
 import org.openstack4j.model.common.Payload;
 import org.openstack4j.openstack.OSFactory;
- 
+
 public class ObjectStorageConnector {
-	
+
 	private String auth_url = "";
     private String project = "";
     private String projectId = "";
@@ -29,17 +29,17 @@ public class ObjectStorageConnector {
     private Identifier projectIdent = null;
     private OSClient os = null;
 	private SwiftAccount account = null;
-	
+
 	public ObjectStorageConnector() {
 		getConnection();
 	}
-	
+
     public void getConnection() {
 
 		try {
             String envApp = System.getenv("VCAP_APPLICATION");
             String envServices = System.getenv("VCAP_SERVICES");
-            
+
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(envServices);
             JSONObject jsonObject = (JSONObject) obj;
@@ -55,47 +55,47 @@ public class ObjectStorageConnector {
             password = credentials.get("password").toString();
             domainId = credentials.get("domainId").toString();
             domainName = credentials.get("domainName").toString();
-            
+
             Identifier domainIdent = Identifier.byName(domainName);
             Identifier projectIdent = Identifier.byName(project);
-            
+
             os = OSFactory.builderV3()
                 .endpoint(auth_url)
                 .credentials(userId, password)
                 .scopeToProject(projectIdent, domainIdent)
                 .authenticate();
-            
+
             account = os.objectStorage().account().get();
-            
+
         } catch (ParseException ex) {
         }
 	}
-	
+
 	public boolean createContainer(String cName) {
         return os.objectStorage().containers().create(cName).isSuccess();
     }
-    
+
     public boolean deleteContainer(String cName) {
         return os.objectStorage().containers().delete(cName).isSuccess();
     }
-    
+
     public String uploadFile(String cName, String fName, Payload payload) {
         return os.objectStorage().objects().put(cName, fName, payload);
     }
-	
+
 	public boolean deleteFile(String cName, String fName) {
         return os.objectStorage().objects().delete(cName, fName).isSuccess();
     }
-    
+
     public SwiftObject getFile(String cName, String fName) {
 		return os.objectStorage().objects().get(cName, fName);
     }
-	
+
 	public SwiftAccount getAccount() {
         account = os.objectStorage().account().get();
         return account;
     }
-	
+
 	public List listAllObjects(String containerName) {
         return os.objectStorage().objects().list(containerName);
     }

@@ -22,7 +22,11 @@
 			SetOperations posSet = new SetOperations("position");
 			Set<String> entries = posSet.sortDesc();
 			for(String entry : entries) {
-				out.println("<div class=\"position\">" + entry + "</div>");
+				if (entry.equals("president")){
+					out.println("<h3>President</h3>");
+				} else if (entry.equals("vice_president")){
+					out.println("<h3>Vice President</h3>");
+				}
 				SetOperations candSet = new SetOperations(entry);
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {

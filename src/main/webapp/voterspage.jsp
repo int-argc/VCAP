@@ -15,6 +15,8 @@
 		<h1>Voter's Page</h1>
 
 		<%
+		
+		
 			TexttoSpeechConnector t2s = new TexttoSpeechConnector();
 		
 			SetOperations posSet = new SetOperations("position");
@@ -25,6 +27,8 @@
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {
 					String url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=" + cand;
+					
+					
 					String audiotag = "<audio id =\"" + cand + "\"  src = \"" + url + "\"controls>";
 					out.println("<div class=\"candidate " + entry + "\">" + cand + "</div>");
 					out.println(audiotag + "</audio>");

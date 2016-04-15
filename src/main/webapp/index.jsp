@@ -9,7 +9,7 @@
 	<div align = "center">
 
 		<form action ="Login" method="post">
-			<h1> Login Page </h1>
+			<h1> VCAP: Voting For Visually Handicapped </h1>
 
 			<input type="text" name="user" placeholder='ENTER USERNAME'  required/> <br/>
 			<input type="password" name="pass" placeholder='ENTER PASSWORD'  required/> <br/>

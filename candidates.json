@@ -1,27 +1,23 @@
 {
 	"position": [
         {
-    		"name" : "President",
+    		"name" : "president",
             "candidates" : [
-    			"Jejomar Binay",
-    			"Miriam Defensor Santiago",
-    			"Rodrigo Duterte",
-    			"Grace Poe",
-				"Mar Roxas"
+    			"Adrian",
+    			"Foobar",
+    			"Jordan",
+    			"Alexis"
     		],
-            "num_candidates" : 5
+            "num_candidates" : 4
 	    },
         {
-    		"name" : "Vice President",
+    		"name" : "vice_president",
             "candidates" : [
-    			"Alan Peter Cayetano",
-    			"Francis Escudero",
-    			"Gringo Honasan",
-				"Bongbong Marcos",
-				"Leni Lobrero",
-				"Antonio Trillanes"
+    			"Lance",
+    			"Renzo",
+    			"Mac"
     		],
-            "num_candidates" : 6
+            "num_candidates" : 3
 	    }
     ],
     "pos_count" : 2

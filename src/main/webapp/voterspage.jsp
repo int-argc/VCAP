@@ -1,6 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="util.SetOperations"%>
-<%@page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,38 +17,71 @@
 				SetOperations candSet = new SetOperations(entry);
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {
-					out.println("<div class=\"candidate\">" + cand + "</div>");
+					out.println("<div class=\"candidate " + entry + "\">" + cand + "</div>");
 				}
 			}
 		%>
-
-
+		
+		<br>
+		President: <input type="text" id="presvote" name="presvote" />
+		Vice President: <input type="text" id="vpvote" name="vpvote" />
+		
         <script>
 
             $(document).ready(function() {
 				var CODE_RIGHT = 39;
 	            var CODE_ENTER = 13;
 				var currSel = "";
+				var POS_CODE = 10;	// initially president
+				
                 $(document.body).keydown(function(event) {
                     var code = event.keyCode;
                     if (code == CODE_RIGHT) {
-                        var currSel = $("div.candidate.selected");
+                    	var cname = "";
+                    	if(POS_CODE == 10) {
+                    		cname = "div.candidate.president";
+                    	} else if(POS_CODE == 9) {
+                    		cname = "div.candidate.vice_president";
+                    	}
+                        var currSel = $(cname + ".selected");
 						var next = currSel.next(".candidate");
 						if(next.length != 0) {
 							next.addClass("selected");
 							currSel.removeClass("selected");
 						} else {
 							currSel.removeClass("selected");
-							currSel.siblings("div.candidate").first().addClass("selected");
+							currSel.siblings(cname).first().addClass("selected");
 						}
                     } else if(code == CODE_ENTER) {
-						var currSel = $("div.candidate.selected");
-                    	alert("vote for " + currSel.text());
+                    	if(POS_CODE == 10) {	// president
+		                	var currSel = $("div.candidate.president.selected");
+		                	var candName = currSel.text();
+		                	document.getElementById("presvote").value = candName;
+		                	
+		                	// audio: you voted
+		                	// audio: name of candidate
+		                	
+		                	// audio: starting vp vote
+                    		$("div.candidate.vice_president").first().addClass("selected");
+                    	} else if(POS_CODE == 9) {	// vp
+                    		var currSel = $("div.candidate.vice_president.selected");
+		                	var candName = currSel.text();
+		                	document.getElementById("vpvote").value = candName;
+		                	
+		                	
+		                	// audio: you voted
+		                	// audio: name of candidate
+		                	// audio: finish na!
+		                	// kaw na dito aidz...
+                    	}
+                    	POS_CODE = POS_CODE - 1;
 					}
                 });
 
 				$(window).load(function() {
-					$("div.candidate").first().addClass("selected");
+					// play audio to say voting will start
+					// play audio of selected name
+					$("div.candidate.president").first().addClass("selected");
 				});
             });
         </script>

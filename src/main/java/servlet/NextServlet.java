@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import javax.servlet.annotation.WebServlet;
 
+import util.SetOperations;
+
 @WebServlet(name = "NextServlet", urlPatterns = {"/NextServlet"})
 
 public class NextServlet extends HttpServlet {
@@ -18,7 +20,20 @@ public class NextServlet extends HttpServlet {
             throws ServletException, IOException {
 			PrintWriter out = response.getWriter();
 			String presvote = request.getParameter("presvote");
-			String vpresvote = request.getParameter("vpresvote");
+			String vpvote = request.getParameter("vpvote");
+			
+			if (presvote != null && vpvote != null){
+				SetOperations presidents = new SetOperations("president");
+				presidents.incrementScore(presvote);
+				
+				SetOperations vpresidents = new SetOperations("vice_president");
+				vpresidents.incrementScore(vpvote);
+			}
+
+	
+			
+			request.setAttribute("pres", presvote);
+			
 			response.sendRedirect("votesuccess.jsp");
 			
     }

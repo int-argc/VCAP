@@ -14,3 +14,7 @@
 .selected {
 	color: blue;
 }
+
+audio{
+	display: none;
+}

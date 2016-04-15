@@ -4,9 +4,9 @@
     		"name" : "president",
             "candidates" : [
     			"Jejomar Binay",
-    			"Miriam Defensor Santiago",
-    			"Rodrigo Duterte",
-    			"Grace Poe",
+				"Miriam Defensor Santiago",
+				"Rodrigo Duterte",
+				"Grace Poe",
 				"Mar Roxas"
     		],
             "num_candidates" : 5

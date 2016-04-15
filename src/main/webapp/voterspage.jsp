@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="connectors.TexttoSpeechConnector"%>
 <%@page import="util.SetOperations"%>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
@@ -13,6 +14,8 @@
 		<h1>Voter's Page</h1>
 
 		<%
+			TexttoSpeechConnector t2s = new TexttoSpeechConnector();
+		
 			SetOperations posSet = new SetOperations("position");
 			Set<String> entries = posSet.sortDesc();
 			for(String entry : entries) {
@@ -20,14 +23,19 @@
 				SetOperations candSet = new SetOperations(entry);
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {
-					out.println("<div class=\"candidate\">" + cand + "</div>");
+					
+					String url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=" + cand;
+					String audiotag = "<audio id =\"" + cand + "\"  src = \"" + url + "\"controls>";
+					out.println("<div class=\"candidate\">" + cand);
+					out.println(audiotag + "</audio>");
+					out.println("</div>");
+
 				}
 			}
 		%>
 
 
         <script>
-
             $(document).ready(function() {
 				var CODE_RIGHT = 39;
 	            var CODE_ENTER = 13;
@@ -45,11 +53,11 @@
 							currSel.siblings("div.candidate").first().addClass("selected");
 						}
                     } else if(code == CODE_ENTER) {
-						var currSel = $("div.candidate.selected");
-                    	alert("vote for " + currSel.text());
+						var currSel = $("div.candidate.selected").text();
+						alert("vote for " + currSel);
+						window.location = "NextServlet";
 					}
                 });
-
 				$(window).load(function() {
 					$("div.candidate").first().addClass("selected");
 				});

@@ -4,9 +4,9 @@
     		"name" : "president",
             "candidates" : [
     			"Jejomar Binay",
-    			"Miriam Defensor Santiago",
-    			"Rodrigo Duterte",
-    			"Grace Poe",
+				"Miriam Defensor Santiago",
+				"Rodrigo Duterte",
+				"Grace Poe",
 				"Mar Roxas"
 				"Jordan Chua"
     		],
@@ -19,7 +19,7 @@
     			"Francis Escudero",
     			"Gringo Honasan",
 				"Bongbong Marcos",
-				"Leni Lobrero",
+				"Leni Robredo",
 				"Antonio Trillanes"
     		],
             "num_candidates" : 6

@@ -10,9 +10,9 @@ repositories {
 }
 
 dependencies {
-    compile 'com.ibm.watson.developer_cloud:java-wrapper:0.1.9'
+    compile 'com.ibm.watson.developer_cloud:java-sdk:2.9.0'
 	compile 'org.glassfish.main.core:glassfish:4.1.1'
-	compile 'javax.servlet:javax.servlet-api:4.0.0-b01'
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	compile 'org.apache.clerezza.ext:org.json.simple:0.4'
 	compile 'org.pacesys:openstack4j:2.10'
 	compile 'org.pacesys.openstack4j.connectors:openstack4j-jersey2:2.10'

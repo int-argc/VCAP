@@ -15,16 +15,24 @@
 		<h1>Voter's Page</h1>
 
 		<%
+		
+		
 			TexttoSpeechConnector t2s = new TexttoSpeechConnector();
 		
 			SetOperations posSet = new SetOperations("position");
 			Set<String> entries = posSet.sortDesc();
 			for(String entry : entries) {
-				out.println("<div class=\"position\">" + entry + "</div>");
+				if (entry.equals("president")){
+					out.println("<h3>President</h3>");
+				} else if (entry.equals("vice_president")){
+					out.println("<h3>Vice President</h3>");
+				}
 				SetOperations candSet = new SetOperations(entry);
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {
 					String url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=" + cand;
+					
+					
 					String audiotag = "<audio id =\"" + cand + "\"  src = \"" + url + "\"controls>";
 					out.println("<div class=\"candidate " + entry + "\">" + cand + "</div>");
 					out.println(audiotag + "</audio>");
@@ -35,6 +43,10 @@
 			String url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=You Voted For";
 			String audiotaghidden = "<audio id = \"you_vote\" src = \"" + url + "\"controls>";
 			out.println("<br/>"+audiotaghidden+"</audio>" +"<br/>");
+			
+			url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=You Voted For";
+			String audiotaghidden6 = "<audio id = \"you_vote2\" src = \"" + url + "\"controls>";
+			out.println("<br/>"+audiotaghidden6+"</audio>" +"<br/>");
 			
 			url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=Voting will now start.";
 			String audiotaghidden2 = "<audio id = \"start\" src = \"" + url + "\"controls>";
@@ -105,6 +117,11 @@
 									var start_vpres = document.getElementById("vpres_start");
 									start_vpres.load();
 									start_vpres.play();
+									
+									$("#vpres_start").on('ended', function(){
+										var currSel = $("div.candidate.vice_president.selected");
+										currSel.next("audio").trigger("play");
+									});
 								});
 							});
 							
@@ -116,13 +133,13 @@
 		                	
 		                	
 		                	// audio: you voted
-							var you_vote = document.getElementById("you_vote");
+							var you_vote = document.getElementById("you_vote2");
 							you_vote.load();
 							you_vote.play();
 							
 							
 		                	// audio: name of candidate
-							$('#you_vote').on('ended', function(){
+							$('#you_vote2').on('ended', function(){
 									currSel.next("audio").trigger("play");
 									currSel.next("audio").on("ended",function(){
 									      	
@@ -154,15 +171,16 @@
 						var pres_start = document.getElementById("pres_start");
 						pres_start.load();
 						pres_start.play();	
-						
+						$("#pres_start").on('ended', function(){
+							var currSel = $("div.candidate.president.selected");
+							currSel.next("audio").trigger("play");
+						});
 					});
 
-					
-
-
-					
 					// play audio of selected name
 					$("div.candidate.president").first().addClass("selected");
+					
+					
 				});
             });
         </script>

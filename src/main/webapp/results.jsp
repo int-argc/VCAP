@@ -14,14 +14,14 @@
         <div align="center">
             <%
 				int max = 0, current = 0;
-				SetOperations pres = new SetOperations("President");
+				SetOperations pres = new SetOperations("president");
 				Set<String> pres_entries = pres.sortDesc();
 				for (String entry : pres_entries){
 					int score = pres.getScore(entry);
 					out.println("<p>Candidate: "+entry+" | Current Votes: " + score + "</p>");
 				}
 			
-				SetOperations vpres = new SetOperations("Vice President");
+				SetOperations vpres = new SetOperations("vice_president");
 				Set<String> vpres_entries = vpres.sortDesc();
 				out.println("Vice President:");
 				for (String entry : vpres_entries){

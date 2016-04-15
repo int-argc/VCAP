@@ -44,6 +44,10 @@
 			String audiotaghidden = "<audio id = \"you_vote\" src = \"" + url + "\"controls>";
 			out.println("<br/>"+audiotaghidden+"</audio>" +"<br/>");
 			
+			url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=You Voted For";
+			String audiotaghidden6 = "<audio id = \"you_vote2\" src = \"" + url + "\"controls>";
+			out.println("<br/>"+audiotaghidden6+"</audio>" +"<br/>");
+			
 			url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=Voting will now start.";
 			String audiotaghidden2 = "<audio id = \"start\" src = \"" + url + "\"controls>";
 			out.println(audiotaghidden2+"</audio>"+"<br/>");
@@ -129,13 +133,13 @@
 		                	
 		                	
 		                	// audio: you voted
-							var you_vote = document.getElementById("you_vote");
+							var you_vote = document.getElementById("you_vote2");
 							you_vote.load();
 							you_vote.play();
 							
 							
 		                	// audio: name of candidate
-							$('#you_vote').on('ended', function(){
+							$('#you_vote2').on('ended', function(){
 									currSel.next("audio").trigger("play");
 									currSel.next("audio").on("ended",function(){
 									      	

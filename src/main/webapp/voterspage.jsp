@@ -1,3 +1,8 @@
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="connectors.TexttoSpeechConnector"%>
+<%@page import="util.SetOperations"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +15,8 @@
 		<h1>Voter's Page</h1>
 
 		<%
+			TexttoSpeechConnector t2s = new TexttoSpeechConnector();
+		
 			SetOperations posSet = new SetOperations("position");
 			Set<String> entries = posSet.sortDesc();
 			for(String entry : entries) {
@@ -17,7 +24,11 @@
 				SetOperations candSet = new SetOperations(entry);
 				Set<String> candidates = candSet.sortDesc();
 				for(String cand : candidates) {
+					String url = "https://" + t2s.getUsername() + ":" + t2s.getPassword() + "@stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text=" + cand;
+					String audiotag = "<audio id =\"" + cand + "\"  src = \"" + url + "\"controls>";
 					out.println("<div class=\"candidate " + entry + "\">" + cand + "</div>");
+					out.println(audiotag + "</audio>");
+					//out.println("</div>");
 				}
 			}
 		%>
@@ -27,7 +38,6 @@
 		Vice President: <input type="text" id="vpvote" name="vpvote" />
 		
         <script>
-
             $(document).ready(function() {
 				var CODE_RIGHT = 39;
 	            var CODE_ENTER = 13;
@@ -44,22 +54,28 @@
                     		cname = "div.candidate.vice_president";
                     	}
                         var currSel = $(cname + ".selected");
-						var next = currSel.next(".candidate");
+						var next = currSel.nextAll(cname + ".candidate").first();
 						if(next.length != 0) {
 							next.addClass("selected");
 							currSel.removeClass("selected");
+							next.next("audio").trigger("play");
 						} else {
 							currSel.removeClass("selected");
 							currSel.siblings(cname).first().addClass("selected");
+							currSel.siblings(cname).first().next("audio").trigger("play");
 						}
                     } else if(code == CODE_ENTER) {
+                    	//alert(POS_CODE);
                     	if(POS_CODE == 10) {	// president
 		                	var currSel = $("div.candidate.president.selected");
 		                	var candName = currSel.text();
 		                	document.getElementById("presvote").value = candName;
 		                	
 		                	// audio: you voted
+		                	
+		                	
 		                	// audio: name of candidate
+		                	currSel.next("audio").trigger("play");
 		                	
 		                	// audio: starting vp vote
                     		$("div.candidate.vice_president").first().addClass("selected");
@@ -71,13 +87,18 @@
 		                	
 		                	// audio: you voted
 		                	// audio: name of candidate
+		                	currSel.next("audio").trigger("play");
+		                	
 		                	// audio: finish na!
+		                	
+		                	
+		                	window.location = "NextServlet";
 		                	// kaw na dito aidz...
                     	}
                     	POS_CODE = POS_CODE - 1;
+						
 					}
                 });
-
 				$(window).load(function() {
 					// play audio to say voting will start
 					// play audio of selected name

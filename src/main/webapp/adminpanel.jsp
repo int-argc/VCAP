@@ -13,7 +13,10 @@
             <form action="UploadFile" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file"/> <br />
                 <input type="submit" class="btn" value="Upload"/>
-            </form>
+            </form> <br/>
+			<form action="Logout" method="POST">
+				<input type="submit" class="btn" value="Logout"/>
+			</form>
 			<a href="results.jsp"> See Current Vote Standings </a>
         </div>
     </body>

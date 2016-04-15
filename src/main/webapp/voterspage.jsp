@@ -53,9 +53,11 @@
 							currSel.siblings("div.candidate").first().addClass("selected");
 						}
                     } else if(code == CODE_ENTER) {
-						var currSel = $("div.candidate.selected").text();
-						alert("vote for " + currSel);
-						window.location = "NextServlet";
+						var currSel = $("div.candidate.selected");
+						alert(currSel.text());
+						var audio = document.getElementById(currSel.text());	
+						audio.load();
+						audio.play()
 					}
                 });
 				$(window).load(function() {

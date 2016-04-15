@@ -109,6 +109,11 @@
 									var start_vpres = document.getElementById("vpres_start");
 									start_vpres.load();
 									start_vpres.play();
+									
+									$("#vpres_start").on('ended', function(){
+										var currSel = $("div.candidate.vice_president.selected");
+										currSel.next("audio").trigger("play");
+									});
 								});
 							});
 							
@@ -158,15 +163,16 @@
 						var pres_start = document.getElementById("pres_start");
 						pres_start.load();
 						pres_start.play();	
-						
+						$("#pres_start").on('ended', function(){
+							var currSel = $("div.candidate.president.selected");
+							currSel.next("audio").trigger("play");
+						});
 					});
 
-					
-
-
-					
 					// play audio of selected name
 					$("div.candidate.president").first().addClass("selected");
+					
+					
 				});
             });
         </script>
